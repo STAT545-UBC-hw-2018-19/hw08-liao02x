@@ -6,6 +6,8 @@ Deployed version is here on the shinyapp.com: https://liaomz.shinyapps.io/BCLiqu
 
 The source code is here: https://github.com/STAT545-UBC-students/hw08-liao02x/blob/master/bcl/app.R
 
+There is something in the css file: https://github.com/STAT545-UBC-students/hw08-liao02x/blob/master/bcl/www/bcl.css
+
 ## Introduction
 
 We are supposed to modify the original app by adding a few features to it. Here is the list for changes I made in the requests:
