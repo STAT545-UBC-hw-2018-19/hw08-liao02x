@@ -4,6 +4,8 @@ This repo is for STAT545 homework 08 created by Minzhi Liao, contains a shiny ap
 
 Deployed version is here on the shinyapp.com: https://liaomz.shinyapps.io/BCLiquor/
 
+The source code is here: https://github.com/STAT545-UBC-students/hw08-liao02x/blob/master/bcl/app.R
+
 ## Introduction
 
 We are supposed to modify the original app by adding a few features to it. Here is the list for changes I made in the requests:
