@@ -6,7 +6,9 @@ bcl <- read.csv("bcl-data.csv", stringsAsFactors = FALSE)
 
 ui <- fluidPage(
   includeCSS("www/bcl.css"),
-  tags$div(class = "title", titlePanel("BC Liquor Store prices")),
+  div(class = "title", titlePanel("BC Liquor Store prices")),
+  img(src = "https://bit.ly/2DJBI9Z", class = "titleimg"),
+  hr(),
   sidebarLayout(
     sidebarPanel(
       sliderInput("priceInput", "Price", 0, 100, c(25, 40), pre = "$"),
@@ -22,7 +24,8 @@ ui <- fluidPage(
            tags$a("OpenDataBC",
                   href = "https://www.opendatabc.ca/dataset/bc-liquor-store-product-price-list-current-prices")),
       br(),
-      span("Built following this tutorial: ", a(href = "http://deanattali.com/blog/building-shiny-apps-tutorial/", "Building shiny apps tutorial")),
+      span("Built following this tutorial: ", 
+           a(href = "http://deanattali.com/blog/building-shiny-apps-tutorial/", "Building shiny apps tutorial")),
       br(), br(),
       em(
         span("Created by Minzhi Liao"),
@@ -35,7 +38,7 @@ ui <- fluidPage(
       hr(),
       tabsetPanel(
         tabPanel("Plot", plotOutput("coolplot")),
-        tabPanel("Table", DT::dataTableOutput("results"))
+        tabPanel("Table", checkboxInput("arrangePrice", "Sort by price"), DT::dataTableOutput("results"))
       ),
       hr(),
       downloadButton("downloadData", "Download result data"),
@@ -49,11 +52,16 @@ server <- function(input, output) {
     if (is.null(input$countryInput)) {
       return(NULL)
     }    
-    bcl %>%
+    filtered <- bcl %>%
       filter(Price >= input$priceInput[1],
              Price <= input$priceInput[2],
              Type %in% input$typeInput,
              Country %in% input$countryInput)
+    if (input$arrangePrice) {
+      filtered <- filtered %>%
+        arrange(Price)
+    }
+    filtered
   })
   myplot <- reactive({
     ggplot(filtered(), aes(Alcohol_Content, fill = Type)) +
@@ -88,9 +96,9 @@ server <- function(input, output) {
   output$downloadData <- downloadHandler(
     filename = function () {
       paste0("data-", 
-             input$priceInput[0],
-             "-",
              input$priceInput[1],
+             "-",
+             input$priceInput[2],
              ".csv")
     },
     content = function(file) {
@@ -101,9 +109,9 @@ server <- function(input, output) {
   output$downloadPlot <- downloadHandler(
     filename = function () {
       paste0("data-", 
-             input$priceInput[0],
-             "-",
              input$priceInput[1],
+             "-",
+             input$priceInput[2],
              ".png")
     },
     content = function(file) {

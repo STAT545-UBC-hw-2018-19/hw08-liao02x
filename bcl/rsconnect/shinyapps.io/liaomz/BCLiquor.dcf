@@ -5,8 +5,8 @@ account: liaomz
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 579087
-bundleId: 1707965
+bundleId: 1708143
 url: https://liaomz.shinyapps.io/BCLiquor/
-when: 1542591222.63215
+when: 1542601403.93719
 asMultiple: FALSE
 asStatic: FALSE
